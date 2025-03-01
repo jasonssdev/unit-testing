@@ -1,15 +1,14 @@
 import requests
 
 def get_location(ip):
-    url = f'https://freeipapi.com/api/json/{ip}'
+    import os
+    api_url = os.getenv('API_URL', 'https://freeipapi.com/api/json')
+    url = f'{api_url}/{ip}'
     response = requests.get(url)
     response.raise_for_status()
     data = response.json()
     return {
-        "Country": data['countryName'],
-        "Region": data['regionName'],
-        "City": data['cityName']
+        "country": data['countryName'],
+        "region": data['regionName'],
+        "city": data['cityName']
         }
-
-if __name__ == '__main__':
-    print(get_location("8.8.8.8"))
